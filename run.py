@@ -7,12 +7,15 @@ import tornado.auth
 import tornado.gen
 
 from apps.common.handlers import MainHandler
+from apps.registration.handlers import LoginHandler, LogoutHandler
 
 
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r'/', MainHandler),
+            (r'/login', LoginHandler),
+            (r'/logout', LogoutHandler),
         ]
         settings = dict(
             cookie_secret="your_cookie_secret",
