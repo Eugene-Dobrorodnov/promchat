@@ -6,7 +6,7 @@ import tornado.websocket
 import tornado.auth
 import tornado.gen
 
-from apps.home.handlers import MainHandler
+from apps.common.handlers import MainHandler
 
 
 class Application(tornado.web.Application):
