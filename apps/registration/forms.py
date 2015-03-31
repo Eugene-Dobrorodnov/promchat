@@ -32,3 +32,19 @@ class SignupForm(Form):
         self.db.add(user)
         self.db.commit()
         return user
+
+
+class LoginFrom(Form):
+
+    def __init__(self, *arg, **kwargs):
+        self.db = kwargs.get('db_session', None)
+        super(LoginFrom, self).__init__(*arg, **kwargs)
+
+    username = StringField('Username', validators=[DataRequired(), Length(max=30)])
+    password = StringField('Password', validators=[DataRequired(), Length(max=30)])
+
+    def validate_username(self, field):
+        password = hashlib.sha1(repr(self.password.data)).hexdigest()
+
+        if not self.db.query(User).filter_by(username=field.data, password=password).scalar():
+            raise ValidationError('A user already exists')

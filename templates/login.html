@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Vertical (basic) form</h2>
-<form role="form">
-    <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter email">
+<h2>Registration</h2>
+
+<form role="form" action="/login" method="post">
+{% module xsrf_form_html() %}
+{% for field in form %}
+    <div class="form-group {% if field.errors %}has-error {% end %}">
+        {% raw field.label(class_="control-label") %}:
+        {% raw field(placeholder=field.label.text, class_="form-control") %}
+        {% if field.errors %}
+            <span class="help-block with-errors"><ul class="list-unstyled">
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% end %}
+            </ul></span>
+        {% end %}
     </div>
-    <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+{% end %}
+<button type="submit" class="btn btn-default">Submit</button>
 </form>
+
+
 {% end %}
