@@ -12,7 +12,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from apps.common.handlers import MainHandler
 from apps.registration.handlers import LoginHandler, LogoutHandler, RegistrationHandler
-from apps.chat.handlers import ChatHandler, WebSocketHandler
+from apps.chat.handlers import RoomListHandler, WebSocketHandler, RoomDetailHandler
 
 
 # Options
@@ -28,8 +28,9 @@ class Application(tornado.web.Application):
             (r'/signup', RegistrationHandler),
             (r'/login', LoginHandler),
             (r'/logout', LogoutHandler),
+            (r'/rooms', RoomListHandler),
+            (r'^/room/(\d+)/?$', RoomDetailHandler),
             (r'/ws', WebSocketHandler),
-            (r'/chat', ChatHandler),
         ]
         settings = dict(
             cookie_secret="your_cookie_secret",

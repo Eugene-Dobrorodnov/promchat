@@ -2,6 +2,7 @@ var ws = new WebSocket("ws://127.0.0.1:5000/ws");
 
 ws.onmessage = function (evt) {
     var data = JSON.parse(evt.data)
+    console.log(data)
     var name = data['name']
     var msg = data['msg']
     $('.table > tbody:last').append(

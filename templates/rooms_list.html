@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="pull-left col-md-3">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a href="#"
+               id="channel-create-button" data-toggle="modal"
+               data-target="#modal-channel">
+                Create channel
+            </a>
+            </div>
+            <div>
+                <ul id="channels-bar" class="nav navbar-nav">
+                    {% for room in rooms %}
+                        <li><a href="#">{{ room }} </a></li>
+                    {% end %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<div id="modal-channel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form role="form" action="/rooms" method="post">
+                {% module xsrf_form_html() %}
+                {% for field in form %}
+                    <div class="form-group {% if field.errors %}has-error {% end %}">
+                        {% raw field.label(class_="control-label") %}:
+                        {% raw field(placeholder=field.label.text, class_="form-control") %}
+                        {% if field.errors %}
+                            <span class="help-block with-errors"><ul class="list-unstyled">
+                            {% for error in field.errors %}
+                              <li>{{ error }}</li>
+                            {% end %}
+                            </ul></span>
+                        {% end %}
+                    </div>
+                {% end %}
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% end %}

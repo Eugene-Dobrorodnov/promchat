@@ -12,3 +12,8 @@ class BaseHandler(RequestHandler):
         if user:
             user = user.decode('utf-8')
         return user
+
+    def raise_404(self):
+        self.clear()
+        self.set_status(404)
+        self.render("404.html")
