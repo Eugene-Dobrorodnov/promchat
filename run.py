@@ -12,6 +12,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from apps.common.handlers import MainHandler
 from apps.registration.handlers import LoginHandler, LogoutHandler, RegistrationHandler
+from apps.chat.handlers import ChatHandler, WebSocketHandler
 
 
 # Options
@@ -27,6 +28,8 @@ class Application(tornado.web.Application):
             (r'/signup', RegistrationHandler),
             (r'/login', LoginHandler),
             (r'/logout', LogoutHandler),
+            (r'/ws', WebSocketHandler),
+            (r'/chat', ChatHandler),
         ]
         settings = dict(
             cookie_secret="your_cookie_secret",
