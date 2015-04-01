@@ -26,6 +26,12 @@
 
 <div class="pull-left col-md-8">
 {% block room_content %}
+    <form class="navbar-form navbar-left" role="search" action="/rooms" method="get ">
+        <div class="form-group">
+            <input type="text" class="form-control" name="q" {% if q %} value="{{ q }}" {% end %} placeholder="Search channels">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
 {% end %}
 </div>
 

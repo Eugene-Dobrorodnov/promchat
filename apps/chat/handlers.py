@@ -1,5 +1,7 @@
 from sqlalchemy import desc
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import func
+
 from tornado.web import authenticated
 from tornado.websocket import WebSocketHandler
 
@@ -13,14 +15,23 @@ class RoomListHandler(BaseHandler):
 
     @authenticated
     def get(self):
+        data = {}
         form = RoomForm()
-        rooms = self.db.query(Room).all()
-        data = {
+        q = self.request.arguments.get('q', None)
+
+        if q and q[0]:
+            rooms = self.db.query(Room).filter(Room.title.ilike('%' + q[0] + '%'))
+            data.update({'q': q[0]})
+        else:
+            rooms = self.db.query(Room).all()
+            data.update({'q': None})
+
+        data.update({
             'user': self.current_user,
             'rooms': rooms,
             'form': form,
             'room': None
-        }
+        })
         self.render('rooms_list.html', **data)
 
     @authenticated
@@ -28,7 +39,7 @@ class RoomListHandler(BaseHandler):
         form = RoomForm(self.request.arguments, db_session=self.db)
         if form.validate():
             obj = form.save()
-            print obj
+            self.redirect('/room %s'.format(obj.id))
         else:
             rooms = self.db.query(Room).all()
             self.render('rooms_list.html', form=form, rooms=rooms)
@@ -45,7 +56,14 @@ class RoomDetailHandler(BaseHandler):
 
         rooms = self.db.query(Room).all()
         form = RoomForm()
-        self.render('room_detail.html', room=room, rooms=rooms, form=form)
+
+        data = {
+            'room': room,
+            'rooms': rooms,
+            'form': form
+        }
+
+        self.render('room_detail.html', **data)
 
 
 class WebSocketHandler(BaseHandler, WebSocketHandler):
