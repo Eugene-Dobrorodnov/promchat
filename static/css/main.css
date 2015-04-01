@@ -6,3 +6,7 @@
 .chat_content span {
     font-size: 11px;
 }
+
+.modal-content {
+    padding: 20px;
+}

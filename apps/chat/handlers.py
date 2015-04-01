@@ -1,6 +1,5 @@
 from sqlalchemy import desc
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy import func
 
 from tornado.web import authenticated
 from tornado.websocket import WebSocketHandler
@@ -39,10 +38,11 @@ class RoomListHandler(BaseHandler):
         form = RoomForm(self.request.arguments, db_session=self.db)
         if form.validate():
             obj = form.save()
-            self.redirect('/room %s'.format(obj.id))
+            redirect_url = '/room/{0}'.format(obj.id)
+            self.redirect(redirect_url)
         else:
             rooms = self.db.query(Room).all()
-            self.render('rooms_list.html', form=form, rooms=rooms)
+            self.render('rooms_list.html', form=form, rooms=rooms, room=None, q=None)
 
 
 class RoomDetailHandler(BaseHandler):
@@ -55,12 +55,10 @@ class RoomDetailHandler(BaseHandler):
             self.raise_404()
 
         rooms = self.db.query(Room).all()
-        form = RoomForm()
 
         data = {
             'room': room,
             'rooms': rooms,
-            'form': form
         }
 
         self.render('room_detail.html', **data)

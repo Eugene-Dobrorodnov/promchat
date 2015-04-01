@@ -8,9 +8,6 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <br>
-            <button type="button" class="btn btn-success" data-target="#modal-channel" id="channel-create-button" data-toggle="modal">Create channel</button>
-
-            <br><br>
             <div>
                 <ul class="nav nav-pills nav-stacked">
                     {% for channel in rooms %}
@@ -30,32 +27,28 @@
         <div class="form-group">
             <input type="text" class="form-control" name="q" {% if q %} value="{{ q }}" {% end %} placeholder="Search channels">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-info">Search channels</button>
+    </form>
+
+    <br><br><br>
+
+    <form role="form" action="/rooms" method="post" class="navbar-form navbar-left">
+        {% module xsrf_form_html() %}
+        {% for field in form %}
+            <div class="form-group {% if field.errors %}has-error {% end %}">
+                {% raw field(placeholder=field.label.text, class_="form-control") %}
+                {% if field.errors %}
+                    <span class="help-block with-errors"><ul class="list-unstyled">
+                    {% for error in field.errors %}
+                      <li>{{ error }}</li>
+                    {% end %}
+                    </ul></span>
+                {% end %}
+            </div>
+        {% end %}
+        <button type="submit" class="btn btn-success">Create channel</button>
     </form>
 {% end %}
 </div>
 
-<div id="modal-channel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <form role="form" action="/rooms" method="post">
-                {% module xsrf_form_html() %}
-                {% for field in form %}
-                    <div class="form-group {% if field.errors %}has-error {% end %}">
-                        {% raw field.label(class_="control-label") %}:
-                        {% raw field(placeholder=field.label.text, class_="form-control") %}
-                        {% if field.errors %}
-                            <span class="help-block with-errors"><ul class="list-unstyled">
-                            {% for error in field.errors %}
-                              <li>{{ error }}</li>
-                            {% end %}
-                            </ul></span>
-                        {% end %}
-                    </div>
-                {% end %}
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-        </div>
-    </div>
-</div>
 {% end %}
