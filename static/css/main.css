@@ -1,0 +1,8 @@
+.chat_content {
+      max-height: 600px;
+      overflow: overlay;
+}
+
+.chat_content span {
+    font-size: 11px;
+}

@@ -1,0 +1,7 @@
+{% for msg in messages %}
+<tr>
+    <td class="col-md-2"><span>{{ msg.created_at.ctime() }}</span></td>
+    <td class="col-md-2"><b>{{ msg.user.username }}:</b></td>
+    <td class="col-md-6">{{ msg.messages }}</td>
+</tr>
+{% end %}

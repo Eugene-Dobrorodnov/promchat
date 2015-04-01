@@ -30,7 +30,8 @@ class Application(tornado.web.Application):
             (r'/logout', LogoutHandler),
             (r'/rooms', RoomListHandler),
             (r'^/room/(\d+)/?$', RoomDetailHandler),
-            (r'/ws', WebSocketHandler),
+            #(r'/ws', WebSocketHandler),
+            (r"/ws/(\d+)/?$", WebSocketHandler),
         ]
         settings = dict(
             cookie_secret="your_cookie_secret",

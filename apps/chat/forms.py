@@ -14,7 +14,6 @@ class RoomForm(Form):
     title = StringField('Title', validators=[DataRequired(), Length(max=30)])
 
     def validate_title(self, field):
-        print self.db.query(Room).filter_by(title=field.data).scalar()
         if self.db.query(Room).filter_by(title=field.data).scalar():
             raise ValidationError('Room with that title already exists')
 

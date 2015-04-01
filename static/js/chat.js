@@ -1,17 +1,17 @@
-var ws = new WebSocket("ws://127.0.0.1:5000/ws");
+$( document ).ready(function() {
+
+var ws = new WebSocket("ws://127.0.0.1:5000/ws/"+ROOM_ID);
 
 ws.onmessage = function (evt) {
+    console.log('Socket open');
+
     var data = JSON.parse(evt.data)
-    console.log(data)
-    var name = data['name']
-    var msg = data['msg']
-    $('.table > tbody:last').append(
-        '<tr><td class="col-md-4"><b>' + name +
-        ':</b></td><td class="col-md-8">' + msg +'</td></tr>'
-    );
+
+    $('.table > tbody:first').prepend(data['html']);
     var n = $(document).height();
     $('html, body').animate({ scrollTop: n });
 };
+
 
 $('#msg_form').submit(function(){
     $massage = $("input[name='msg']")
@@ -19,4 +19,10 @@ $('#msg_form').submit(function(){
     $massage.val('');
     ws.send(msg);
     return false;
+});
+
+ws.onclose = function () {
+    console.log('Socket close');
+};
+
 });

@@ -3,6 +3,7 @@ import datetime
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 from apps.registration.models import User
 
@@ -30,6 +31,8 @@ class Message(Base):
     room_id = Column(Integer, ForeignKey('rooms.id'), nullable=False)
     messages = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    user = relationship(User, backref="messages")
 
 
 room_table = Room.__table__
