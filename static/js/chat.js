@@ -1,6 +1,7 @@
 $( document ).ready(function() {
 
-var ws = new WebSocket("ws://127.0.0.1:5000/ws/"+ROOM_ID);
+//var ws = new WebSocket("ws://127.0.0.1:5000/ws/"+ROOM_ID);
+var ws = new WebSocket("ws://https://promchat.herokuapp.com/ws"+ROOM_ID)
 
 ws.onmessage = function (evt) {
     console.log('Socket open');
