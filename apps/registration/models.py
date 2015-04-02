@@ -4,8 +4,10 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
+from apps.settings import Settings
 
-engine = create_engine('postgresql+psycopg2:///prom_chat')
+
+engine = create_engine(Settings.DB_PATCH)
 Base = declarative_base()
 
 
@@ -25,5 +27,5 @@ users_table = User.__table__
 metadata = Base.metadata
 
 
-def create_all():
+def create_user():
     metadata.create_all(engine)

@@ -6,11 +6,11 @@ from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, crea
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
-
+from apps.settings import Settings
 from apps.registration.models import User
 
 
-engine = create_engine('postgresql+psycopg2:///prom_chat')
+engine = create_engine(Settings.DB_PATCH)
 Base = declarative_base()
 
 
@@ -65,5 +65,5 @@ def after_insert_listener(mapper, connection, instance):
         )
 
 
-def create_all():
+def create_chat_models():
     metadata.create_all(engine)

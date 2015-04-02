@@ -10,15 +10,10 @@ from tornado.options import define, options
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+from apps.settings import Settings
 from apps.common.handlers import MainHandler
 from apps.registration.handlers import LoginHandler, LogoutHandler, RegistrationHandler
 from apps.chat.handlers import RoomListHandler, WebSocketHandler, RoomDetailHandler
-
-
-# Options
-define("port", default=8888, help="run on the given port", type=int)
-define("debug", default=False, type=bool)
-define("db_path", default='postgresql+psycopg2:///prom_chat', type=str)
 
 
 class Application(tornado.web.Application):
@@ -43,7 +38,7 @@ class Application(tornado.web.Application):
             debug=True,
         )
         tornado.web.Application.__init__(self, handlers, **settings)
-        engine = create_engine(options.db_path, convert_unicode=True, echo=options.debug)
+        engine = create_engine(Settings.DB_PATCH, convert_unicode=True)
         self.db = scoped_session(sessionmaker(bind=engine))
 
 
