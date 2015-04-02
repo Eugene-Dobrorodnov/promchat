@@ -58,15 +58,15 @@ class RoomDetailHandler(BaseHandler):
 
         data = {
             'room': room,
-            'rooms': rooms,
+            'rooms': rooms
         }
-
         self.render('room_detail.html', **data)
 
 
 class WebSocketHandler(BaseHandler, WebSocketHandler):
     connections = set()
 
+    @authenticated
     def open(self, room):
 
         if not room or not self.db.query(Room).filter_by(id=room).scalar():
@@ -82,9 +82,11 @@ class WebSocketHandler(BaseHandler, WebSocketHandler):
         result_html = self.render_string('msg.html', messages=messages)
         self.write_message({'html': result_html})
 
+    @authenticated
     def on_close(self):
         WebSocketHandler.connections.remove(self)
 
+    @authenticated
     def on_message(self, msg):
 
         try:
@@ -100,6 +102,7 @@ class WebSocketHandler(BaseHandler, WebSocketHandler):
         result_html = self.render_string('msg.html', messages=[message])
         self.send_messages(result_html)
 
+    @authenticated
     def send_messages(self, msg):
         for conn in WebSocketHandler.connections:
             if conn.room == self.room:

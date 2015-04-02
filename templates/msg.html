@@ -2,6 +2,16 @@
 <tr>
     <td class="col-md-2"><span>{{ msg.created_at.ctime() }}</span></td>
     <td class="col-md-2"><b>{{ msg.user.username }}:</b></td>
-    <td class="col-md-6">{{ msg.messages }}</td>
+    <td class="col-md-6">
+        {% if msg.is_link %}
+            <h4>{{ msg.title }}</h4>
+            <a href="{{ msg.messages }}" target="_blank">{{ msg.messages }}</a>
+            {% if msg.image %}
+                <br><img src="{{ msg.image }}">
+            {% end %}
+        {% else %}
+            {{ msg.messages }}
+        {% end %}
+    </td>
 </tr>
 {% end %}
