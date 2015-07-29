@@ -10,3 +10,5 @@ Install project:
 * `pip install -r requirements.txt`
 * `python create_db.py`
 * `python manage.py run.py`
+
+* `Demo: https://promchat.herokuapp.com/`
