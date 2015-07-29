@@ -11,4 +11,4 @@ Install project:
 * `python create_db.py`
 * `python manage.py run.py`
 
-[Absolute README link](https://github.com/username/repo/blob/branch/docs/more_words.md)
+* `Demo [Absolutehttps://promchat.herokuapp.com](https://promchat.herokuapp.com)`
