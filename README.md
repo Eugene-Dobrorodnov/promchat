@@ -11,4 +11,4 @@ Install project:
 * `python create_db.py`
 * `python manage.py run.py`
 
-* `Demo: https://promchat.herokuapp.com/`
+* `Demo: [a link](https://promchat.herokuapp.com/)`
